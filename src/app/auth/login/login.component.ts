@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   public loginForm = this.fb.group({
     email: [ localStorage.getItem('email') || '' , [ Validators.required, Validators.email ]],
-    password: ['', Validators.required ],
+    password: ['', [ Validators.required, Validators.minLength(3) ] ],
     remember: [false]
   });
 
@@ -38,7 +38,11 @@ export class LoginComponent implements OnInit {
 
   login(){
 
-    this.usuarioService.login( this.loginForm.value )
+    if ( this.loginForm.invalid ) {
+      return;
+    }else {
+
+      this.usuarioService.login( this.loginForm.value )
       .subscribe( resp =>  {
 
         if ( this.loginForm.get('remember').value ) {
@@ -54,6 +58,10 @@ export class LoginComponent implements OnInit {
         // Si sucede un error
         Swal.fire('Error', err.error.msg, 'error' )
       });
+
+    }
+
+    
   }
     
   renderButton() {

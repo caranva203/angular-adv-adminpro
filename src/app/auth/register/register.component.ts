@@ -35,7 +35,6 @@ export class RegisterComponent implements OnInit {
   crearUsuario(  ){
 
     this.formSubmitted = true;
-    console.log(this.registerForm.value);
 
     if ( this.registerForm.invalid ) {
       return;
@@ -43,7 +42,7 @@ export class RegisterComponent implements OnInit {
       //Realizar el posteo
       this.usuarioService.crearUsuario( this.registerForm.value )
           .subscribe( resp => {
-            
+
             //Navegar al Dashboard
             this.router.navigateByUrl('/');
 
