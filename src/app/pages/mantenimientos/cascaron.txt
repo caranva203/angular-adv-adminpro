@@ -12,7 +12,7 @@
     </div>
 </div>
 
-<div class="row fadeIn fast">
+<div class="row animated fadeIn fast">
     <div class="col-12">
         <div class="alert alert-info text-center">
             <h4 class="alert-heading">Cargando</h4>
@@ -47,7 +47,7 @@
                                 <td>Lunar probe project</td>
                                 <td>Lunar probe project</td>
                                 <td>Lunar probe project</td>
-                                <td class="text-nowrap">
+                                <td class="text-nowrap text-center">
                                     <a href="#" data-toggle="tooltip" data-original-title="Editar"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
                                     <a href="#" data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-close text-danger"></i> </a>
                                 </td>
