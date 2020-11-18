@@ -38,12 +38,23 @@ export class UsuarioService {
     return this.usuario.uid;
   }
 
+  get role(): 'ADMIN_ROLE' | 'USER_ROLE'{
+    return this.usuario.role;
+  }
+
   get headers(){
     return {
       headers: {
         'x-token': this.token 
       }
     }
+  }
+
+  guardarLocalStorage( token: string, menu: any ){
+    // Se lee el token de respuesta y se guarda en el local storage
+    localStorage.setItem('token', token);
+    // se guarda en el localstorge el menú que el usuario verá en la aplicación 
+    localStorage.setItem('menu', JSON.stringify( menu ) );
   }
 
   googleInit(){
@@ -66,8 +77,11 @@ export class UsuarioService {
   }
 
   logout(){
+    // Borrar token
     localStorage.removeItem('token');
- 
+    // Borrar menu
+    localStorage.removeItem('menu');
+
     this.auth2.signOut().then( () => {
       //Se debe ejecutar por ser libreria de terceros
       this.ngZone.run( () => {
@@ -91,8 +105,9 @@ export class UsuarioService {
 
         // se crea una instancia del usuario 
          this.usuario = new Usuario( nombre, email, '', img, google, role, uid );
-        // Se lee el token de respuesta y se guarda en el local storage
-        localStorage.setItem('token', resp.token);
+
+         this.guardarLocalStorage( resp.token, resp.menu );
+         
         return true;
       }),
       //atrapa el error que suceda en el flujo y regresa un nuevo observable con el valor de false
@@ -106,7 +121,7 @@ export class UsuarioService {
       .pipe(
         tap((resp: any) => {
           //guardar el token en el localStorage
-          localStorage.setItem('token', resp.token);
+          this.guardarLocalStorage( resp.token, resp.menu );
         })
       );
 
@@ -129,7 +144,7 @@ export class UsuarioService {
                       //Se recibe lo que responda la petición de manera exitosa
                       tap( (resp: any)  => {
                         //guardar el token en el localStorage
-                        localStorage.setItem('token', resp.token );
+                        this.guardarLocalStorage( resp.token, resp.menu );
                       })
                     );
     
@@ -142,7 +157,7 @@ export class UsuarioService {
                       //Se recibe lo que responda la petición de manera exitosa
                       tap( (resp: any)  => {
                         //guardar el token en el localStorage
-                        localStorage.setItem('token', resp.token );
+                        this.guardarLocalStorage( resp.token, resp.menu );
                       })
                     );
     
